@@ -1,8 +1,15 @@
 {
   "name": "nexus-data",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Danish company data from the NEXUS Data API: CVR register, people, locations, annual-report financials, company summaries and news & developments.",
-  "author": {
-    "name": "itm8 NEXUS"
+  "author": { "name": "itm8 NEXUS" },
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "NEXUS API key",
+      "description": "Your personal secret key (nx_live_sk_...) from the NEXUS admin.",
+      "required": true,
+      "sensitive": true
+    }
   }
 }

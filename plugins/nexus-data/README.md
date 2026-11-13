@@ -1,8 +1,8 @@
 # nexus-data – Claude Code plugin
 
-Gives Claude Code tools for the NEXUS Data API: search Danish companies, read register records, people, locations, financials, summaries and news & developments. It has a skill that tells Claude which tool to use and what each one costs.
+Gives Claude Code tools for the NEXUS Data API: search Danish companies, read register records, people, locations, financials, summaries and news & developments. A skill tells Claude which tool to use and what each one costs.
 
-The tools run in a small local MCP server (`server/index.mjs`, no dependencies). It needs Node.js 18 or newer; `server/start.sh` finds it in the usual install folders (installer, Homebrew, nvm, Volta, asdf, fnm, mise) even when Claude was opened from the Dock. Tested on macOS; on Windows, `sh` must be on the PATH (Git for Windows' `usr\bin`). It calls the API with your own key, so your usage is counted against your plan.
+The tools run on NEXUS's own server (`/api/mcp`), so nothing needs installing beyond the plugin. Calls use your own key and count against your plan.
 
 ## Install
 
@@ -12,37 +12,28 @@ The tools run in a small local MCP server (`server/index.mjs`, no dependencies).
    - `cvr:about:read`
    - `cvr:developments:read`
    - `cvr:segment:read`
-2. Put the key in your shell profile, e.g. `~/.zshrc`, and open a new terminal:
-
-   ```sh
-   export NEXUS_API_KEY="nx_live_sk_..."
-   ```
-
-3. In Claude Code, add the marketplace and install the plugin:
+2. In Claude Code:
 
    ```
    /plugin marketplace add MortenGad/NEXUSDataPlugin
    /plugin install nexus-data@nexus
    ```
 
-4. Restart Claude Code. `/mcp` should list `nexus-data` as connected.
+   Claude asks for the key. It is masked and stored in the system keychain.
+3. Restart Claude Code. `/mcp` should list `nexus-data` as connected.
 
 Try: *"Find the CVR number for itm8 and show its last five years of revenue and net profit."*
 
-## Settings
+To change the key later: `/plugin configure nexus-data@nexus`.
 
-| Variable | Default |
-| --- | --- |
-| `NEXUS_API_KEY` | none, required |
-| `NEXUS_API_BASE` | `https://func-nexus-data-api-8ddb.azurewebsites.net/api` |
+### Upgrading from 0.1.x
+
+0.1.x ran a local server and needed Node.js and `NEXUS_API_KEY`. Neither is needed now. Run `/plugin marketplace update nexus`, then `/plugin update nexus-data@nexus`, and enter your key when asked. You can delete the `NEXUS_API_KEY` line from `~/.zshrc`.
 
 ## Troubleshooting
 
-| Error | Meaning |
+| Problem | Meaning |
 | --- | --- |
-| `/mcp` shows nexus-data as failed | Node.js 18+ was not found. Install the LTS version from nodejs.org and restart Claude. |
-| `NEXUS_API_KEY is not set` | Claude Code was started without the variable. Export it and restart. |
-| HTTP 401 | The key is wrong or revoked. |
-| HTTP 403 `missing scope: …` | Ask the admin to add that scope to your key. |
-| HTTP 403 `ip '…' not allowed` | The key has an IP rule and this machine isn't on it. |
-| HTTP 429 | The monthly quota is used up, or research was retried within five minutes. |
+| `/mcp` shows nexus-data as failed | The key is wrong or revoked (401), this machine's IP is not allowed for the key (403), or the monthly quota is used up (429). Check the key with `/plugin configure nexus-data@nexus`. |
+| A tool returns HTTP 403 `missing scope: …` | Ask the admin to add that scope to your key. |
+| A tool returns HTTP 429 | The monthly quota is used up, or research was retried within five minutes. |

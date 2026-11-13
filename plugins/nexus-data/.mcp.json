@@ -1,12 +1,10 @@
 {
   "mcpServers": {
     "nexus-data": {
-      "command": "sh",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/server/start.sh"
-      ],
-      "env": {
-        "NEXUS_API_KEY": "${NEXUS_API_KEY}"
+      "type": "http",
+      "url": "${NEXUS_MCP_URL:-https://func-nexus-data-api-8ddb.azurewebsites.net/api/mcp}",
+      "headers": {
+        "Authorization": "Bearer ${user_config.api_key}"
       }
     }
   }
