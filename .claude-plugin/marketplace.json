@@ -1,0 +1,16 @@
+{
+  "name": "nexus",
+  "owner": {
+    "name": "itm8 NEXUS"
+  },
+  "metadata": {
+    "description": "itm8 NEXUS plugins for Claude Code: Danish company data from the NEXUS Data API."
+  },
+  "plugins": [
+    {
+      "name": "nexus-data",
+      "source": "./plugins/nexus-data",
+      "description": "Danish company data from the NEXUS Data API, as tools in Claude Code."
+    }
+  ]
+}

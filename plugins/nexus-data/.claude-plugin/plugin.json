@@ -1,0 +1,6 @@
+{
+  "name": "nexus-data",
+  "version": "0.1.0",
+  "description": "Danish company data from the NEXUS Data API: CVR register, people, locations, annual-report financials, company summaries and news & developments.",
+  "author": { "name": "itm8 NEXUS" }
+}
