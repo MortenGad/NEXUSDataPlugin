@@ -2,7 +2,7 @@
 
 Gives Claude Code tools for the NEXUS Data API: search Danish companies, read register records, people, locations, financials, summaries and news & developments. It has a skill that tells Claude which tool to use and what each one costs.
 
-The tools run in a small local MCP server (`server/index.mjs`, Node 18+, no dependencies). It calls the API with your own key, so your usage is counted against your plan.
+The tools run in a small local MCP server (`server/index.mjs`, no dependencies). It needs Node.js 18 or newer; `server/start.sh` finds it in the usual install folders (installer, Homebrew, nvm, Volta, asdf, fnm, mise) even when Claude was opened from the Dock. Tested on macOS; on Windows, `sh` must be on the PATH (Git for Windows' `usr\bin`). It calls the API with your own key, so your usage is counted against your plan.
 
 ## Install
 
@@ -40,6 +40,7 @@ Try: *"Find the CVR number for itm8 and show its last five years of revenue and 
 
 | Error | Meaning |
 | --- | --- |
+| `/mcp` shows nexus-data as failed | Node.js 18+ was not found. Install the LTS version from nodejs.org and restart Claude. |
 | `NEXUS_API_KEY is not set` | Claude Code was started without the variable. Export it and restart. |
 | HTTP 401 | The key is wrong or revoked. |
 | HTTP 403 `missing scope: …` | Ask the admin to add that scope to your key. |
